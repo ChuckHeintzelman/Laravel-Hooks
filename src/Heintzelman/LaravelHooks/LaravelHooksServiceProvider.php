@@ -9,15 +9,6 @@ class LaravelHooksServiceProvider extends ServiceProvider {
     protected $files;
 
     /**
-     * Constructor
-     */
-    public function __construct($app)
-    {
-        parent::__construct($app);
-        $this->files = $this->app['files'];
-    }
-
-    /**
      * Register other hooks for later in the lifecycle
      */
     public function boot()
@@ -35,6 +26,7 @@ class LaravelHooksServiceProvider extends ServiceProvider {
      */
     public function register()
     {
+        $this->files = $this->app['files'];
         $this->registerPreboot();
         $this->registerOnBooting();
     }
