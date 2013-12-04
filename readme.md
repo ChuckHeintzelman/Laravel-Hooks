@@ -78,7 +78,7 @@ All other hooks are considered callback hooks. Any return value is ignored.
 
 ## Speeding up the hooks
 
-You can speed up checking for the hook files by disabling any hooks you're not used.
+You can speed up checking for the hook files by disabling any hooks you're not using.
 
 Create a `app/config/hooks.php` file and add entries for any hooks you want to disable.
 
@@ -98,9 +98,9 @@ Each file includes has $app available to it. This is useful if you want to acces
 
 ### preboot.php
 
-This file is loaded at the point in the request that service providers are registered. This occurs before the service providers are booted (the `boot()` method called) and the application is booted.
+This file is loaded at the point in the request that service providers are registered. This occurs before either the service providers or application is booted.
 
-Because this is executed so early in the lifecycle you should use caution when accessing other Laravel components. Use of the `App` and `Config` facade are safe, but access to other components should only occur through the `$app['name']` mechanism. And even then, not all components may be loaded.
+Because this is executed so early in the lifecycle you should use caution when accessing other Laravel components. Use of the `App` and `Config` facade are safe, but access to other components should only occur through the `$app['name']` mechanism. And even then, not all of Laravel components are fully loaded.
 
 **This is the ideal place to register middleware!**
 
@@ -112,13 +112,13 @@ The following lists components that can be used because they are part of Laravel
 * `$app['router']` - The router
 * `$app['exception']` - The exception handler
 
-_(Other components may be available for your application depending on the configuration of service providers. You'll need to test for your particular application.)_
+_(Other components may be available for your application depending on the configuration of your service providers. You'll need to test for your particular application.)_
 
 ### onbooting.php
 
 This file is loaded after all service providers are booted, but before the application is booted. Since service providers are now booted you are safe to use Laravel facades as you normally would.
 
-**Please Note** since your application's `app/start/global.php`, `app/routes.php`, and `app/filters.php` files are not loaded, do not do anything within this hook that requires a functionality set within those files.
+**Please Note** since your application's `app/start/global.php`, `app/routes.php`, and `app/filters.php` files are not loaded, do not do anything within this hook that requires functionality set within those files.
 
 ### onboot.php
 
@@ -134,7 +134,7 @@ Remember, this is a filter. You should return a Response or View from this file.
 
 This file is loaded before the route for the request is determined.
 
-In addition to the `$app` variable you also have a `$request` variable available. You can use the `$request` variable or modify it as needed.
+In addition to the `$app` variable you also have a `$request` variable available. You can use the `$request` variable and modify it as needed.
 
 Remember, this is a filter. Most times you'll want `onbefore.php` to return a Request, View, or Redirect.
 
@@ -152,9 +152,9 @@ If you want to change the response, one of the most common ways is with the `$re
 
 This file is loaded after the response is sent to the user.
 
-In addition to the `$app` variable you also have `$request` and `$response` available to you. Although these variables are available, changing them has no affect to what the user receives.
+In addition to the `$app` variable you also have `$request` and `$response` available to you. Although these variables are available, changing them has no affect on what the user receives.
 
-Normally, this callback is used for logging or some other such activity that you don't want to take time for during the request.
+Normally, this callback is used for logging or some other activity which you don't want to take time for during the request.
 
 ### onshutdown.php
 
