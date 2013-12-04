@@ -1,6 +1,6 @@
 {
     "name": "heintzelman/laravel-hooks",
-    "description": "",
+    "description": "Easily hook into Laravel 4.1's Lifecycle at various points.",
     "authors": [
         {
             "name": "Chuck Heintzelman",
